@@ -1,0 +1,49 @@
+<footer class="bg-gray-100 border-t border-gray-200 mt-8">
+  <div class="container mx-auto py-8 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Support section -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Hỗ trợ</h3>
+        <ul class="space-y-3">
+          <li *ngFor="let link of supportLinks">
+            <a [routerLink]="link.url" class="text-gray-600 hover:underline">{{ link.name }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Host section -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Đón tiếp khách</h3>
+        <ul class="space-y-3">
+          <li *ngFor="let link of hostLinks">
+            <a [routerLink]="link.url" class="text-gray-600 hover:underline">{{ link.name }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Company section -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">DiEO BnB</h3>
+        <ul class="space-y-3">
+          <li *ngFor="let link of companyLinks">
+            <a [routerLink]="link.url" class="text-gray-600 hover:underline">{{ link.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom footer -->
+    <div class="border-t border-gray-300 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+      <div class="text-gray-600 text-sm mb-4 md:mb-0">
+        © {{ currentYear }} DiEO BnB, Inc.
+      </div>
+      <div class="flex space-x-4 text-sm">
+        <a href="#" class="text-gray-600 hover:underline">Quyền riêng tư</a>
+        <span class="text-gray-400">·</span>
+        <a href="#" class="text-gray-600 hover:underline">Điều khoản</a>
+        <span class="text-gray-400">·</span>
+        <a href="#" class="text-gray-600 hover:underline">Sơ đồ trang web</a>
+      </div>
+    </div>
+  </div>
+</footer>
