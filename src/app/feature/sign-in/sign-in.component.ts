@@ -9,6 +9,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { whitespaceValidator } from '../../../shared/validator/white-space.validator';
 import { AuthService } from '../../services/auth.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { SignUpComponent } from '../sign-up/sign-up.component';
+import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,7 +20,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
     NzButtonModule,
     FormsModule,
     NzFormModule,
-    RouterLink,
+    NzModalModule,
     NzIconModule,],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
@@ -33,7 +35,9 @@ export class SignInComponent {
     private readonly fb: FormBuilder,
     private readonly _authSvc: AuthService,
     private readonly router: Router,
-    private readonly _notification: NzNotificationService
+    private readonly _notification: NzNotificationService,
+    private readonly _nzModalRef: NzModalRef,
+    private readonly modal: NzModalService
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +64,14 @@ export class SignInComponent {
 
       }
     })
+  }
+
+  openSignUpModal(): void {
+    this._nzModalRef.close();
+    const modal = this.modal.create({
+      nzContent: SignUpComponent,
+      nzWidth: '500px',
+    });
   }
 
   onFocusEmail(): void {

@@ -24,11 +24,29 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 export class PropertyCardComponent {
   @Input() property!: Property;
   
+  currentImageIndex: number = 0;
+
   formatCurrency(price: number, currency: string): string {
     return new Intl.NumberFormat('vi-VN', { 
       style: 'currency', 
       currency: 'VND',
       maximumFractionDigits: 0 
     }).format(price);
+  }
+
+  showPrevImage(): void {
+    if (!this.property.images?.length) return;
+    this.currentImageIndex =
+      (this.currentImageIndex - 1 + this.property.images.length) % this.property.images.length;
+  }
+
+  showNextImage(): void {
+    if (!this.property.images?.length) return;
+    this.currentImageIndex =
+      (this.currentImageIndex + 1) % this.property.images.length;
+  }
+
+  goToImage(index: number): void {
+    this.currentImageIndex = index;
   }
 }

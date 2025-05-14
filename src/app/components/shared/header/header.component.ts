@@ -14,7 +14,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-
+import { SignInComponent } from '../../../feature/sign-in/sign-in.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -43,55 +44,26 @@ export class HeaderComponent implements OnInit {
   
   constructor(
     private readonly authService: AuthService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly modal: NzModalService
   ) {}
 
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
-    
-    this.initLoginForm();
   }
 
-  initLoginForm(): void {
-    this.loginForm = this.fb.group({
-      countryCode: ['+84', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9,10}$/)]]
+
+  openLoginModal(): void {
+    const modal = this.modal.create({
+      nzContent: SignInComponent,
+      nzWidth: '500px',
     });
   }
 
-  showLoginModal(): void {
-    this.isLoginModalVisible = true;
-  }
 
-  handleCancel(): void {
-    this.isLoginModalVisible = false;
-  }
 
-  submitForm(): void {
-    if (this.loginForm.valid) {
-      this.isLoading = true;
-      const phoneNumber = this.loginForm.value.countryCode + this.loginForm.value.phoneNumber;
-      
-      this.authService.login(phoneNumber).subscribe({
-        next: () => {
-          this.isLoading = false;
-          this.isLoginModalVisible = false;
-        },
-        error: () => {
-          this.isLoading = false;
-        }
-      });
-    } else {
-      Object.values(this.loginForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity();
-        }
-      });
-    }
-  }
 
   logout(): void {
     this.authService.logout();
